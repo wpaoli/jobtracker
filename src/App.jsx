@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import JobsTable from "./JobsTable";
 import EnterJob from "./EnterJob";
-import { Modal, Button } from "antd";
 import axios from "axios";
 
 const App = () => {
