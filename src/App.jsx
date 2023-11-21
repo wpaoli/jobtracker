@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import JobsTable from "./JobsTable";
 import EnterJob from "./EnterJob";
 import { Modal, Button } from "antd";
-
 import axios from "axios";
 
 const App = () => {
+  //List of jobs
   const [jobs, setJobs] = useState([]);
 
+  //API call to get jobs from the BE
   useEffect(() => {
     axios
       .get("http://localhost:3000/jobs")
@@ -17,10 +18,16 @@ const App = () => {
       );
   }, []);
 
+  //Modifying the list of jobs to add a key for react
   const dataSource = jobs.map((job) => ({
     ...job,
     key: job.JobID,
   }));
+
+  //Function to Update State of jobs, this gets fired from the 'onJobUpdate'
+  //that comes back from from the EnterJob.jsx
+  //Im still sorta unclear on how this actually works, which fucking pisses me off.
+  //TODO: Create a super basic example of this function attribute stuff.
 
   const addJob = (job) => {
     setJobs((prevJobs) => [...prevJobs, job]);
@@ -32,6 +39,8 @@ const App = () => {
   };
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
+  const [form, setForm] = useState(null);
+
   const showModal = () => {
     setOpen(true);
   };
@@ -41,10 +50,18 @@ const App = () => {
     setOpen(false);
   };
 
+  const handleOk = () => {
+    console.log(form);
+    if (form) {
+      form.submit();
+      console.log(form);
+    }
+  };
+
   return (
     <div>
       <JobsTable jobs={dataSource} />
-
+      {console.log({ dataSource })}
       <Button type="primary" onClick={showModal}>
         Add Job
       </Button>
@@ -54,9 +71,9 @@ const App = () => {
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
         okText="Submit"
-        okButtonProps={{}}
+        onOk={handleOk}
       >
-        <EnterJob onJobUpdate={addJob} />
+        <EnterJob onJobUpdate={addJob} formInstance={setForm} />
       </Modal>
     </div>
   );

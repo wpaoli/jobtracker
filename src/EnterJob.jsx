@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import axios from "axios";
 import { Button, Form, Input } from "antd";
 
@@ -7,7 +8,14 @@ const onFinishFailed = (errorInfo) => {
 
 const { TextArea } = Input;
 
-const EnterJob = ({ onJobUpdate }) => {
+const EnterJob = ({ onJobUpdate, formInstance }) => {
+  const [form] = Form.useForm();
+
+  useEffect(() => {
+    // Pass the form instance back to the App component
+    formInstance(form);
+  }, [form, formInstance]);
+
   const onFinish = (values) => {
     axios
       .post("http://localhost:3000/job", values)
@@ -22,6 +30,7 @@ const EnterJob = ({ onJobUpdate }) => {
 
   return (
     <Form
+      form={form}
       name="basic"
       labelCol={{
         span: 8,
