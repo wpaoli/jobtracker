@@ -10,6 +10,7 @@ const App = () => {
 
   const addJob = (job) => {
     setJobs((prevJobs) => [...prevJobs, job]);
+    console.log(setJobs((prevJobs) => [...prevJobs, job]));
   };
   //API call to get jobs from the BE
   useEffect(() => {
@@ -21,7 +22,7 @@ const App = () => {
       .catch((error) =>
         console.error(`There was an error retrieving the job list: ${error}`)
       );
-  });
+  }, []);
 
   return (
     <>

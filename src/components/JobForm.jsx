@@ -63,7 +63,7 @@ const JobForm = ({ onJobSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    console.log(values);
     axios
       .post("http://localhost:3000/job", values)
       .then((response) => {
