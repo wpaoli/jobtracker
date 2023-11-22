@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import FormInput from "./FormInput";
 //Going to try adding the Form here:
-const JobForm = () => {
+const JobForm = ({ onJobSubmit }) => {
   const [values, setValues] = useState({
     company: "",
     job_title: "",
@@ -63,11 +63,12 @@ const JobForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("handleSubmit", values);
+
     axios
       .post("http://localhost:3000/job", values)
       .then((response) => {
         console.log(response);
+        onJobSubmit(values);
       })
       .catch((error) => {
         console.error(`There was an error posting the job: ${error}`);

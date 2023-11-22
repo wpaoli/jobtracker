@@ -5,9 +5,12 @@ import DisplayJobs from "./components/DisplayJobs";
 import "./App.css";
 
 const App = () => {
-  //List of jobs
+  //Variable that holds the jobs and maintains the latest state of the list
   const [jobs, setJobs] = useState([]);
 
+  const addJob = (job) => {
+    setJobs((prevJobs) => [...prevJobs, job]);
+  };
   //API call to get jobs from the BE
   useEffect(() => {
     axios
@@ -23,7 +26,7 @@ const App = () => {
   return (
     <>
       <DisplayJobs jobs={jobs} />
-      <JobForm />
+      <JobForm onJobSubmit={addJob} />
     </>
   );
 };
