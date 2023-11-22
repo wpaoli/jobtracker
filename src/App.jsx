@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "./App.css";
 
 const App = () => {
   //List of jobs
@@ -15,7 +16,7 @@ const App = () => {
       .catch((error) =>
         console.error(`There was an error retrieving the job list: ${error}`)
       );
-  }, []);
+  });
 
   const JobsTable = ({ jobs }) => {
     return (
