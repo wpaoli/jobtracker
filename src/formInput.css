@@ -1,0 +1,13 @@
+input {
+    padding: 15px;
+    margin: 10px 0;
+}
+
+span {
+    color: red;
+    display: none;
+}
+
+input:invalid[focused="true"] ~ span {
+    display: block;
+}
