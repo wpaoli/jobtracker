@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { FormInput } from "./FormInput";
 import "./App.css";
 
 const App = () => {
@@ -45,9 +46,26 @@ const App = () => {
     );
   };
 
+  //Going to try adding the Form here:
+
+  const AddJobs = () => {
+    return (
+      <div className="app">
+        <form>
+          <FormInput />
+          <FormInput />
+          <FormInput />
+          <FormInput />
+          <FormInput />
+        </form>
+      </div>
+    );
+  };
+
   return (
     <>
       <JobsTable jobs={jobs} />
+      <AddJobs />
     </>
   );
 };
