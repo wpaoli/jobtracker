@@ -24,16 +24,14 @@ const App = () => {
   }, []);
 
   const handleDelete = (jobId) => {
-    console.log(jobId);
-    setJobs((prevJobs) => prevJobs.filter((job) => job.job_id !== jobId));
-    // axios
-    //   .delete(`http://localhost:3000/job/${jobId}`)
-    //   .then(() => {
-    //     setJobs((prevJobs) => prevJobs.filter((job) => job.job_id !== jobId));
-    //   })
-    //   .catch((error) =>
-    //     console.error(`There was an error deleting the job: ${error}`)
-    //   );
+    axios
+      .delete(`http://localhost:3000/job/${jobId}`)
+      .then(() => {
+        setJobs((prevJobs) => prevJobs.filter((job) => job.job_id !== jobId));
+      })
+      .catch((error) =>
+        console.error(`There was an error deleting the job: ${error}`)
+      );
   };
 
   return (
