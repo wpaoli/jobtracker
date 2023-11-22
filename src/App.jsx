@@ -10,7 +10,6 @@ const App = () => {
 
   const addJob = (job) => {
     setJobs((prevJobs) => [...prevJobs, job]);
-    console.log(setJobs((prevJobs) => [...prevJobs, job]));
   };
   //API call to get jobs from the BE
   useEffect(() => {

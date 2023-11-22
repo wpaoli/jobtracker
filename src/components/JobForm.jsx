@@ -67,7 +67,8 @@ const JobForm = ({ onJobSubmit }) => {
     axios
       .post("http://localhost:3000/job", values)
       .then((response) => {
-        console.log(response);
+        //Since the id is created on the server side I need to send it to the client side
+        values.id = response.data.insertId;
         onJobSubmit(values);
       })
       .catch((error) => {
