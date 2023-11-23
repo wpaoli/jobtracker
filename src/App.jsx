@@ -18,8 +18,10 @@ const App = () => {
       .then((response) => {
         setJobs(response.data);
       })
-      .catch((error) =>
-        console.error(`There was an error retrieving the job list: ${error}`)
+      .catch(
+        (error) =>
+          console.error(`There was an error retrieving the job list: ${error}`)
+        //TODO: Print out a message to the screen when this fails
       );
   }, []);
 
@@ -34,9 +36,17 @@ const App = () => {
       );
   };
 
+  const handleEdit = (jobId) => {
+    console.log(jobId);
+  };
+
   return (
     <>
-      <DisplayJobs jobs={jobs} onJobDelete={handleDelete} />
+      <DisplayJobs
+        jobs={jobs}
+        onJobDelete={handleDelete}
+        onJobEdit={handleEdit}
+      />
       <JobForm onJobSubmit={addJob} />
     </>
   );
