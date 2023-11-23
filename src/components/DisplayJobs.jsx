@@ -1,37 +1,20 @@
-import { convertLegacyProps } from "antd/es/button";
 import React, { useState, useEffect } from "react";
 
 const DisplayJobs = ({ jobs, onJobDelete, onJobEdit }) => {
-  const [isEditMode, setEditMode] = useState([]);
+  const [jobRows, setJobRows] = useState([]);
 
   useEffect(() => {
-    setEditMode(jobs.map((job) => ({ id: job.job_id, editable: false })));
+    setJobRows(jobs.map((job) => ({ ...job, editable: false })));
   }, [jobs]);
 
-  // console.log(isEditMode);
-
   const handleEdit = (job) => {
-    // isEditMode.map((item) => console.log(item.id === job.job_id, item.id));
-
-    setEditMode((prevState) => {
-      prevState.map((item) => console.log(item.id === job.job_id, item.id));
-      // console.log(prevState);
+    setJobRows(() => {
+      return jobRows.map((obj) =>
+        job.job_id === obj.job_id ? { ...obj, editable: true } : obj
+      );
     });
-
-    console.log(isEditMode);
-
-    // setEditMode(jobs.map((job) => ({ id: job.job_id, editable: false })));
-
-    // console.log(...isEditMode);
-    //I think I need to do the previous thing here?
-    // setEditMode(
-    //   (prevState) => {
-    //     prevState.map((item) => console.log(item));
-    //   }
-    //   // { id: job.job_id, editable: true }
-    // );
-    // console.log(isEditMode);
   };
+  // console.log("jobRows", jobRows);
 
   return (
     <table>
@@ -46,32 +29,35 @@ const DisplayJobs = ({ jobs, onJobDelete, onJobEdit }) => {
         </tr>
       </thead>
       <tbody>
-        {jobs.map((job) => (
-          <tr key={job.job_id}>
+        {jobRows.map((item) => (
+          <tr key={item.job_id}>
             <td>
-              <button onClick={() => onJobDelete(job.job_id)}>Delete</button>
-              <button onClick={() => onJobEdit(job.job_id)}>Edit</button>
+              <button onClick={() => onJobDelete(item.job_id)}>Delete</button>
+              <button onClick={() => onJobEdit(item.job_id)}>Edit</button>
             </td>
 
             <td>
-              {/* If job.id matches the one in here or maybe doesnt match it */}
-              {/* {console.log(
-                "inTD",
-                isEditMode.find((item) => item.id === job.job_id)
-              )} */}
-              {/* {console.log("inTD", isEditMode)} */}
-              <span onClick={() => handleEdit(job)}>{job.company}</span>
+              {item.editable
+                ? console.log("editable")
+                : console.log("not editable")}
+
+              {item.editable ? (
+                <input placeholder={item.company}></input>
+              ) : (
+                <span onClick={() => handleEdit(item)}>{item.company}</span>
+              )}
 
               {/* {isEditMode.find((item) => item.id === job.job_id).editable ? (
                 <input placeholder={job.company}></input>
               ) : (
                 <span onClick={() => handleEdit(job)}>{job.company}</span>
               )} */}
+              {/* <span onClick={() => handleEdit(item)}>{item.company}</span> */}
             </td>
-            <td>{job.job_title}</td>
-            <td>{job.job_posting}</td>
-            <td>{job.date_applied}</td>
-            <td>{job.notes}</td>
+            <td>{item.job_title}</td>
+            <td>{item.job_posting}</td>
+            <td>{item.date_applied}</td>
+            <td>{item.notes}</td>
           </tr>
         ))}
       </tbody>
