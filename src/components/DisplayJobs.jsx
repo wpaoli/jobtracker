@@ -21,10 +21,16 @@ const DisplayJobs = ({ jobs, onJobDelete, onEdit }) => {
     }
   };
   const handleEntry = (e, job) => {
+    // console.log(e.target.attributes[1].value);
+    let value =
+      e.target.value === "" ? e.target.attributes[1].value : e.target.value;
+
+    console.log(value);
+
     setJobRows((prevJobRows) => {
       const updatedJobRows = prevJobRows.map((obj) =>
         obj.job_id === job.job_id
-          ? { ...obj, [e.target.name]: e.target.value, editable: false }
+          ? { ...obj, [e.target.name]: value, editable: false }
           : obj
       );
 
