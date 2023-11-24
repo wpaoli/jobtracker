@@ -16,6 +16,7 @@ const App = () => {
 
   const editJob = (job) => {
     const jobId = job.job_id;
+    // console.log(jobId);
     axios
       .put(`http://localhost:3000/job/${jobId}`, job)
       .then(() => {})

@@ -70,6 +70,7 @@ const DisplayJobs = ({ jobs, onJobDelete, onEdit }) => {
                   onBlur={(e) => handleEntry(e, item)}
                   onKeyDown={(e) => handleKeyboard(e, item)}
                   placeholder={item.company}
+                  autoFocus
                 ></input>
               ) : (
                 <span onClick={() => handleEdit(item)}>{item.company}</span>
