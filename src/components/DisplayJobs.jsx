@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const DisplayJobs = ({ jobs, onJobDelete, onJobEdit }) => {
+const DisplayJobs = ({ jobs, onJobDelete, onEdit }) => {
   const [jobRows, setJobRows] = useState([]);
 
   useEffect(() => {
@@ -14,6 +14,28 @@ const DisplayJobs = ({ jobs, onJobDelete, onJobEdit }) => {
       );
     });
   };
+
+  const handleKeyboard = (e, job) => {
+    if (e.key === "Enter") {
+      handleEntry(e, job);
+    }
+  };
+  const handleEntry = (e, job) => {
+    setJobRows((prevJobRows) => {
+      const updatedJobRows = prevJobRows.map((obj) =>
+        obj.job_id === job.job_id
+          ? { ...obj, [e.target.name]: e.target.value, editable: false }
+          : obj
+      );
+
+      // Call onEdit with the updated job row
+      onEdit(updatedJobRows.find((row) => job.job_id === row.job_id));
+
+      // Return the updated job rows to update the state
+      return updatedJobRows;
+    });
+  };
+
   // console.log("jobRows", jobRows);
 
   return (
@@ -33,26 +55,19 @@ const DisplayJobs = ({ jobs, onJobDelete, onJobEdit }) => {
           <tr key={item.job_id}>
             <td>
               <button onClick={() => onJobDelete(item.job_id)}>Delete</button>
-              <button onClick={() => onJobEdit(item.job_id)}>Edit</button>
             </td>
 
             <td>
-              {item.editable
-                ? console.log("editable")
-                : console.log("not editable")}
-
               {item.editable ? (
-                <input placeholder={item.company}></input>
+                <input
+                  name="company"
+                  onBlur={(e) => handleEntry(e, item)}
+                  onKeyDown={(e) => handleKeyboard(e, item)}
+                  placeholder={item.company}
+                ></input>
               ) : (
                 <span onClick={() => handleEdit(item)}>{item.company}</span>
               )}
-
-              {/* {isEditMode.find((item) => item.id === job.job_id).editable ? (
-                <input placeholder={job.company}></input>
-              ) : (
-                <span onClick={() => handleEdit(job)}>{job.company}</span>
-              )} */}
-              {/* <span onClick={() => handleEdit(item)}>{item.company}</span> */}
             </td>
             <td>{item.job_title}</td>
             <td>{item.job_posting}</td>

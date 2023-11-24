@@ -11,6 +11,18 @@ const App = () => {
   const addJob = (job) => {
     setJobs((prevJobs) => [...prevJobs, job]);
   };
+
+  const editJob = (job) => {
+    console.log("APP", job);
+    const jobId = job.job_id;
+    axios
+      .put(`http://localhost:3000/job/${jobId}`, job)
+      .then(() => {})
+      .catch((error) =>
+        console.error(`There was an error updating the job: ${error}`)
+      );
+  };
+
   //API call to get jobs from the BE
   useEffect(() => {
     axios
@@ -36,17 +48,9 @@ const App = () => {
       );
   };
 
-  const handleEdit = (jobId) => {
-    console.log(jobId);
-  };
-
   return (
     <>
-      <DisplayJobs
-        jobs={jobs}
-        onJobDelete={handleDelete}
-        onJobEdit={handleEdit}
-      />
+      <DisplayJobs jobs={jobs} onJobDelete={handleDelete} onEdit={editJob} />
       <JobForm onJobSubmit={addJob} />
     </>
   );
