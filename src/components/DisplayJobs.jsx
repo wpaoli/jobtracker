@@ -1,48 +1,43 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 const DisplayJobs = ({ jobs, onJobDelete, onEdit }) => {
-  const [jobRows, setJobRows] = useState([]);
+  const [editMode, setEditMode] = useState({
+    id: null,
+    editRow: false,
+  });
 
-  useEffect(() => {
-    setJobRows(jobs.map((job) => ({ ...job, editable: false })));
-  }, [jobs]);
+  const [changedRow, setChangedRow] = useState();
 
-  const handleEdit = (job) => {
-    setJobRows(() => {
-      return jobRows.map((obj) =>
-        job.job_id === obj.job_id ? { ...obj, editable: true } : obj
-      );
-    });
-  };
-
-  const handleKeyboard = (e, job) => {
-    if (e.key === "Enter") {
-      handleEntry(e, job);
+  const toggleEditMode = (item) => {
+    if (editMode.editRow) {
+      // handleEntry(item);
+      console.log(item);
     }
-  };
-  const handleEntry = (e, job) => {
-    // console.log(e.target.attributes[1].value);
-    let value =
-      e.target.value === "" ? e.target.attributes[1].value : e.target.value;
-
-    console.log(value);
-
-    setJobRows((prevJobRows) => {
-      const updatedJobRows = prevJobRows.map((obj) =>
-        obj.job_id === job.job_id
-          ? { ...obj, [e.target.name]: value, editable: false }
-          : obj
-      );
-
-      // Call onEdit with the updated job row
-      onEdit(updatedJobRows.find((row) => job.job_id === row.job_id));
-
-      // Return the updated job rows to update the state
-      return updatedJobRows;
-    });
+    setEditMode((prevEditMode) => ({
+      id: item.job_id,
+      editRow: !prevEditMode.editRow,
+    }));
+    // handleEntry();
+    // console.log(item);
   };
 
-  // console.log("jobRows", jobRows);
+  // console.log(editMode.id);
+
+  // const handleKeyboard = (e, job) => {
+  //   //BAILING ON THIS FOR NOW, LETS TRY JUST A EDIT/SAVE
+  //   if (e.key === "Enter") {
+  //     handleEntry(e, job);
+  //   }
+  // };
+
+  const pushChange = (e, id) => {
+    console.log(e.target.attributes[0].value, e.target.value);
+  };
+  const handleEntry = (job) => {
+    console.log(job);
+    // This needs to be redone
+    // onEdit(updatedJobRows.find((row) => job.job_id === row.job_id));
+  };
 
   return (
     <table>
@@ -57,29 +52,59 @@ const DisplayJobs = ({ jobs, onJobDelete, onEdit }) => {
         </tr>
       </thead>
       <tbody>
-        {jobRows.map((item) => (
+        {jobs.map((item) => (
+          // <tr key={item.job_id} onKeyDown={(e) => handleKeyboard(e, item)}>
+
           <tr key={item.job_id}>
             <td>
               <button onClick={() => onJobDelete(item.job_id)}>Delete</button>
+              <button onClick={() => toggleEditMode(item)}>
+                {editMode.editRow && item.job_id === editMode.id
+                  ? "Save"
+                  : "Edit"}
+              </button>
             </td>
-
-            <td>
-              {item.editable ? (
-                <input
-                  name="company"
-                  onBlur={(e) => handleEntry(e, item)}
-                  onKeyDown={(e) => handleKeyboard(e, item)}
-                  placeholder={item.company}
-                  autoFocus
-                ></input>
-              ) : (
-                <span onClick={() => handleEdit(item)}>{item.company}</span>
-              )}
-            </td>
-            <td>{item.job_title}</td>
-            <td>{item.job_posting}</td>
-            <td>{item.date_applied}</td>
-            <td>{item.notes}</td>
+            {/* //FOR NOW going to duplicated this for every field but eventually pull this out to its own thing */}
+            {editMode.editRow && item.job_id === editMode.id ? (
+              <>
+                <td>
+                  <input
+                    name="company"
+                    defaultValue={item.company}
+                    onChange={(e) => {
+                      pushChange(e, item.job_id);
+                    }}
+                    autoFocus
+                  ></input>
+                </td>
+                <td>
+                  <input name="job_title" defaultValue={item.job_title}></input>
+                </td>
+                <td>
+                  <input
+                    name="job_posting"
+                    defaultValue={item.job_posting}
+                  ></input>
+                </td>
+                <td>
+                  <input
+                    name="date_applied"
+                    defaultValue={item.date_applied}
+                  ></input>
+                </td>
+                <td>
+                  <input name="notes" defaultValue={item.notes}></input>
+                </td>
+              </>
+            ) : (
+              <>
+                <td>{item.company}</td>
+                <td>{item.job_title}</td>
+                <td>{item.job_posting}</td>
+                <td>{item.date_applied}</td>
+                <td>{item.notes}</td>
+              </>
+            )}
           </tr>
         ))}
       </tbody>
