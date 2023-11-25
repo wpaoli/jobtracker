@@ -11,7 +11,7 @@ const DisplayJobs = ({ jobs, onJobDelete, onEdit }) => {
     setChangedRows(jobs.map((job) => ({ ...job })));
   }, [jobs]);
 
-  console.log(ChangedRows);
+  // console.log(ChangedRows);
 
   const toggleEditMode = (item) => {
     if (editMode.editRow) {
@@ -36,7 +36,7 @@ const DisplayJobs = ({ jobs, onJobDelete, onEdit }) => {
   };
 
   const handleEntry = (e, job) => {
-    console.log(e, job);
+    // console.log(e, job);
     setChangedRows((prevChangedRows) => {
       const updatedJobRows = prevChangedRows.map((obj) =>
         obj.job_id === job.job_id
@@ -48,10 +48,6 @@ const DisplayJobs = ({ jobs, onJobDelete, onEdit }) => {
       // Return the updated job rows to update the state
       return updatedJobRows;
     });
-  };
-
-  const testBlur = () => {
-    console.log("bluurrr");
   };
 
   return (
@@ -137,11 +133,15 @@ const DisplayJobs = ({ jobs, onJobDelete, onEdit }) => {
                 </>
               ) : (
                 <>
-                  <td>{item.company}</td>
-                  <td>{item.job_title}</td>
-                  <td>{item.job_posting}</td>
-                  <td>{item.date_applied}</td>
-                  <td>{item.notes}</td>
+                  <td onClick={() => toggleEditMode(item)}>{item.company}</td>
+                  <td onClick={() => toggleEditMode(item)}>{item.job_title}</td>
+                  <td onClick={() => toggleEditMode(item)}>
+                    {item.job_posting}
+                  </td>
+                  <td onClick={() => toggleEditMode(item)}>
+                    {item.date_applied}
+                  </td>
+                  <td onClick={() => toggleEditMode(item)}>{item.notes}</td>
                 </>
               )}
             </tr>

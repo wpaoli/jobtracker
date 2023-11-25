@@ -15,6 +15,7 @@ const App = () => {
   };
 
   const editJob = (job) => {
+    console.log(job);
     const jobId = job.job_id;
     // setJobs((prevJobs) => [...prevJobs, job]);
     axios

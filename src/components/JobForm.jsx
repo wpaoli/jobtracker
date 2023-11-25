@@ -65,13 +65,12 @@ const JobForm = ({ onJobSubmit }) => {
   //At some point Ill restructure this whole app to be more organized. lol, no you will.
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(values);
     axios
       .post("http://localhost:3000/job", values)
       .then((response) => {
         //Since the id is created on the server side I need to send it to the client side
         //After I post, I am getting the ID that the server created and sending it to my client
-        values.id = response.data.insertId;
+        values.job_id = response.data.insertId;
         onJobSubmit(values);
       })
       .catch((error) => {
