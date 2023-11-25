@@ -43,6 +43,10 @@ const DisplayJobs = ({ jobs, onJobDelete, onEdit }) => {
     // onEdit(updatedJobRows.find((row) => job.job_id === row.job_id));
   };
 
+  const testBlur = () => {
+    console.log("bluurrr");
+  };
+
   return (
     <table>
       <thead>
@@ -78,6 +82,7 @@ const DisplayJobs = ({ jobs, onJobDelete, onEdit }) => {
                     onChange={(e) => {
                       pushChange(e, item.job_id);
                     }}
+                    onBlur={testBlur}
                     autoFocus
                   ></input>
                 </td>
