@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const DisplayJobs = ({ jobs, onJobDelete, onEdit }) => {
   const [editMode, setEditMode] = useState({
@@ -6,11 +6,14 @@ const DisplayJobs = ({ jobs, onJobDelete, onEdit }) => {
     editRow: false,
   });
 
-  const [changedRow, setChangedRow] = useState();
+  const [changedRows, setChangedRows] = useState();
+  useEffect(() => {
+    setChangedRows(jobs.map((job) => ({ ...job })));
+  }, [jobs]);
 
   const toggleEditMode = (item) => {
     if (editMode.editRow) {
-      // handleEntry(item);
+      handleEntry(item);
       console.log(item);
     }
     setEditMode((prevEditMode) => ({
@@ -35,6 +38,7 @@ const DisplayJobs = ({ jobs, onJobDelete, onEdit }) => {
   };
   const handleEntry = (job) => {
     console.log(job);
+
     // This needs to be redone
     // onEdit(updatedJobRows.find((row) => job.job_id === row.job_id));
   };
@@ -78,7 +82,13 @@ const DisplayJobs = ({ jobs, onJobDelete, onEdit }) => {
                   ></input>
                 </td>
                 <td>
-                  <input name="job_title" defaultValue={item.job_title}></input>
+                  <input
+                    name="job_title"
+                    defaultValue={item.job_title}
+                    onChange={(e) => {
+                      // pushChange(e, item.job_id);
+                    }}
+                  ></input>
                 </td>
                 <td>
                   <input
