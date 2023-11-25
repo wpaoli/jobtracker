@@ -14,10 +14,6 @@ const DisplayJobs = ({ jobs, onJobDelete, onEdit }) => {
   // console.log(ChangedRows);
 
   const toggleEditMode = (item) => {
-    if (editMode.editRow) {
-      // handleEntry(item);
-      // console.log(item);
-    }
     setEditMode((prevEditMode) => ({
       id: item.job_id,
       editRow: !prevEditMode.editRow,
@@ -37,6 +33,7 @@ const DisplayJobs = ({ jobs, onJobDelete, onEdit }) => {
 
   const handleEntry = (e, job) => {
     // console.log(e, job);
+    // toggleEditMode(job);
     setChangedRows((prevChangedRows) => {
       const updatedJobRows = prevChangedRows.map((obj) =>
         obj.job_id === job.job_id
