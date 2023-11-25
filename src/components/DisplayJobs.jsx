@@ -6,15 +6,17 @@ const DisplayJobs = ({ jobs, onJobDelete, onEdit }) => {
     editRow: false,
   });
 
-  const [changedRows, setChangedRows] = useState();
+  const [ChangedRows, setChangedRows] = useState();
   useEffect(() => {
     setChangedRows(jobs.map((job) => ({ ...job })));
   }, [jobs]);
 
+  console.log(ChangedRows);
+
   const toggleEditMode = (item) => {
     if (editMode.editRow) {
-      handleEntry(item);
-      console.log(item);
+      // handleEntry(item);
+      // console.log(item);
     }
     setEditMode((prevEditMode) => ({
       id: item.job_id,
@@ -26,21 +28,26 @@ const DisplayJobs = ({ jobs, onJobDelete, onEdit }) => {
 
   // console.log(editMode.id);
 
-  // const handleKeyboard = (e, job) => {
-  //   //BAILING ON THIS FOR NOW, LETS TRY JUST A EDIT/SAVE
-  //   if (e.key === "Enter") {
-  //     handleEntry(e, job);
-  //   }
-  // };
-
-  const pushChange = (e, id) => {
-    console.log(e.target.attributes[0].value, e.target.value);
+  const handleKeyboard = (e, job) => {
+    if (e.key === "Enter") {
+      handleEntry(e, job);
+      toggleEditMode(job);
+    }
   };
-  const handleEntry = (job) => {
-    console.log(job);
 
-    // This needs to be redone
-    // onEdit(updatedJobRows.find((row) => job.job_id === row.job_id));
+  const handleEntry = (e, job) => {
+    console.log(e, job);
+    setChangedRows((prevChangedRows) => {
+      const updatedJobRows = prevChangedRows.map((obj) =>
+        obj.job_id === job.job_id
+          ? { ...obj, [e.target.name]: e.target.value }
+          : obj
+      );
+      // Call onEdit with the updated job row
+      onEdit(updatedJobRows.find((row) => job.job_id === row.job_id));
+      // Return the updated job rows to update the state
+      return updatedJobRows;
+    });
   };
 
   const testBlur = () => {
@@ -60,68 +67,85 @@ const DisplayJobs = ({ jobs, onJobDelete, onEdit }) => {
         </tr>
       </thead>
       <tbody>
-        {jobs.map((item) => (
-          // <tr key={item.job_id} onKeyDown={(e) => handleKeyboard(e, item)}>
+        {ChangedRows &&
+          ChangedRows.map((item) => (
+            // <tr key={item.job_id} onKeyDown={(e) => handleKeyboard(e, item)}>
 
-          <tr key={item.job_id}>
-            <td>
-              <button onClick={() => onJobDelete(item.job_id)}>Delete</button>
-              <button onClick={() => toggleEditMode(item)}>
-                {editMode.editRow && item.job_id === editMode.id
-                  ? "Save"
-                  : "Edit"}
-              </button>
-            </td>
-            {/* //FOR NOW going to duplicated this for every field but eventually pull this out to its own thing */}
-            {editMode.editRow && item.job_id === editMode.id ? (
-              <>
-                <td>
-                  <input
-                    name="company"
-                    defaultValue={item.company}
-                    onChange={(e) => {
-                      pushChange(e, item.job_id);
-                    }}
-                    onBlur={testBlur}
-                    autoFocus
-                  ></input>
-                </td>
-                <td>
-                  <input
-                    name="job_title"
-                    defaultValue={item.job_title}
-                    onChange={(e) => {
-                      // pushChange(e, item.job_id);
-                    }}
-                  ></input>
-                </td>
-                <td>
-                  <input
-                    name="job_posting"
-                    defaultValue={item.job_posting}
-                  ></input>
-                </td>
-                <td>
-                  <input
-                    name="date_applied"
-                    defaultValue={item.date_applied}
-                  ></input>
-                </td>
-                <td>
-                  <input name="notes" defaultValue={item.notes}></input>
-                </td>
-              </>
-            ) : (
-              <>
-                <td>{item.company}</td>
-                <td>{item.job_title}</td>
-                <td>{item.job_posting}</td>
-                <td>{item.date_applied}</td>
-                <td>{item.notes}</td>
-              </>
-            )}
-          </tr>
-        ))}
+            <tr key={item.job_id}>
+              <td>
+                <button onClick={() => onJobDelete(item.job_id)}>Delete</button>
+                <button onClick={() => toggleEditMode(item)}>
+                  {editMode.editRow && item.job_id === editMode.id
+                    ? "Save"
+                    : "Edit"}
+                </button>
+              </td>
+              {/* //FOR NOW going to duplicated this for every field but eventually pull this out to its own thing */}
+              {editMode.editRow && item.job_id === editMode.id ? (
+                <>
+                  <td>
+                    <input
+                      name="company"
+                      defaultValue={item.company}
+                      onBlur={(e) => {
+                        handleEntry(e, item);
+                      }}
+                      onKeyDown={(e) => handleKeyboard(e, item)}
+                      autoFocus
+                    ></input>
+                  </td>
+                  <td>
+                    <input
+                      name="job_title"
+                      defaultValue={item.job_title}
+                      onBlur={(e) => {
+                        handleEntry(e, item);
+                      }}
+                      onKeyDown={(e) => handleKeyboard(e, item)}
+                    ></input>
+                  </td>
+                  <td>
+                    <input
+                      name="job_posting"
+                      defaultValue={item.job_posting}
+                      onBlur={(e) => {
+                        handleEntry(e, item);
+                      }}
+                      onKeyDown={(e) => handleKeyboard(e, item)}
+                    ></input>
+                  </td>
+                  <td>
+                    <input
+                      name="date_applied"
+                      defaultValue={item.date_applied}
+                      onBlur={(e) => {
+                        handleEntry(e, item);
+                      }}
+                      onKeyDown={(e) => handleKeyboard(e, item)}
+                    ></input>
+                  </td>
+                  <td>
+                    <input
+                      name="notes"
+                      defaultValue={item.notes}
+                      onBlur={(e) => {
+                        handleEntry(e, item);
+                      }}
+                      onKeyDown={(e) => handleKeyboard(e, item)}
+                    ></input>
+                  </td>
+                </>
+              ) : (
+                <>
+                  <td>{item.company}</td>
+                  <td>{item.job_title}</td>
+                  <td>{item.job_posting}</td>
+                  <td>{item.date_applied}</td>
+                  <td>{item.notes}</td>
+                </>
+              )}
+            </tr>
+          ))}
       </tbody>
     </table>
   );

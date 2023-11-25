@@ -16,7 +16,7 @@ const App = () => {
 
   const editJob = (job) => {
     const jobId = job.job_id;
-    // console.log(jobId);
+    // setJobs((prevJobs) => [...prevJobs, job]);
     axios
       .put(`http://localhost:3000/job/${jobId}`, job)
       .then(() => {})
