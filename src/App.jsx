@@ -3,7 +3,13 @@ import axios from "axios";
 import JobForm from "./components/JobForm";
 import DisplayJobs from "./components/DisplayJobs";
 import "./App.css";
+/*
+TODO:
 
+- refactor out the API calls
+
+
+*/
 const App = () => {
   //Variable that holds the jobs and maintains the latest state of the list
   const [jobs, setJobs] = useState([]);

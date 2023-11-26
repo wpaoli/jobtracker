@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import EditableCells from "./EditableCell";
 
 const DisplayJobs = ({ jobs, onJobDelete, onEdit }) => {
   const [editMode, setEditMode] = useState({
@@ -74,73 +75,16 @@ const DisplayJobs = ({ jobs, onJobDelete, onEdit }) => {
                 </button>
               </td>
               {/* //FOR NOW going to duplicated this for every field but eventually pull this out to its own thing */}
-              {editMode.editRow && item.job_id === editMode.id ? (
-                <>
-                  <td>
-                    <input
-                      name="company"
-                      defaultValue={item.company}
-                      onBlur={(e) => {
-                        handleEntry(e, item);
-                      }}
-                      onKeyDown={(e) => handleKeyboard(e, item)}
-                      autoFocus
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      name="job_title"
-                      defaultValue={item.job_title}
-                      onBlur={(e) => {
-                        handleEntry(e, item);
-                      }}
-                      onKeyDown={(e) => handleKeyboard(e, item)}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      name="job_posting"
-                      defaultValue={item.job_posting}
-                      onBlur={(e) => {
-                        handleEntry(e, item);
-                      }}
-                      onKeyDown={(e) => handleKeyboard(e, item)}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      name="date_applied"
-                      defaultValue={item.date_applied}
-                      onBlur={(e) => {
-                        handleEntry(e, item);
-                      }}
-                      onKeyDown={(e) => handleKeyboard(e, item)}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      name="notes"
-                      defaultValue={item.notes}
-                      onBlur={(e) => {
-                        handleEntry(e, item);
-                      }}
-                      onKeyDown={(e) => handleKeyboard(e, item)}
-                    ></input>
-                  </td>
-                </>
-              ) : (
-                <>
-                  <td onClick={() => toggleEditMode(item)}>{item.company}</td>
-                  <td onClick={() => toggleEditMode(item)}>{item.job_title}</td>
-                  <td onClick={() => toggleEditMode(item)}>
-                    {item.job_posting}
-                  </td>
-                  <td onClick={() => toggleEditMode(item)}>
-                    {item.date_applied}
-                  </td>
-                  <td onClick={() => toggleEditMode(item)}>{item.notes}</td>
-                </>
-              )}
+
+              <>
+                <EditableCells
+                  job={item}
+                  handleEntry={handleEntry}
+                  handleKeyboard={handleKeyboard}
+                  editMode={editMode}
+                  toggleEditMode={toggleEditMode}
+                ></EditableCells>
+              </>
             </tr>
           ))}
       </tbody>
