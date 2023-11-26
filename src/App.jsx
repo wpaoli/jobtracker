@@ -3,6 +3,8 @@ import axios from "axios";
 import JobForm from "./components/JobForm";
 import DisplayJobs from "./components/DisplayJobs";
 import "./App.css";
+import Modal from "react-modal";
+
 /*
 TODO:
 
@@ -14,10 +16,20 @@ const App = () => {
   //Variable that holds the jobs and maintains the latest state of the list
   const [jobs, setJobs] = useState([]);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   //Adds job to state management clent side, but the adding of a job to the DB happens in
   //JobForm.jsx, prolly want to move that at some point
   const addJob = (job) => {
     setJobs((prevJobs) => [...prevJobs, job]);
+    closeModal();
   };
 
   const editJob = (job) => {
@@ -60,7 +72,22 @@ const App = () => {
   return (
     <>
       <DisplayJobs jobs={jobs} onJobDelete={handleDelete} onEdit={editJob} />
-      <JobForm onJobSubmit={addJob} />
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        style={{
+          content: {
+            width: "50%", // Adjust this value to set the width
+            height: "65%",
+            margin: "0 auto", // This is used to horizontally center the modal
+          },
+        }}
+      >
+        <JobForm onJobSubmit={addJob} />
+      </Modal>
+      <button className="block" onClick={openModal}>
+        Add Job
+      </button>
     </>
   );
 };

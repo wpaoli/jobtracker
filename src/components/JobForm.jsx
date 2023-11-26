@@ -88,6 +88,7 @@ const JobForm = ({ onJobSubmit }) => {
         />
       ))}
       <button>Submit</button>
+      {/* <button onClick={(e) => e.preventDefault()}>Cancel</button> */}
     </form>
   );
 };

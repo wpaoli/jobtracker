@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Table } from "antd";
+
 import EditableCells from "./EditableCell";
 
 const DisplayJobs = ({ jobs, onJobDelete, onEdit }) => {
@@ -52,7 +54,8 @@ const DisplayJobs = ({ jobs, onJobDelete, onEdit }) => {
     <table>
       <thead>
         <tr>
-          <th>Actions</th>
+          <th colSpan={2}>Actions</th>
+
           <th>Company</th>
           <th>Job Title</th>
           <th>Link to Job Posting</th>
@@ -68,6 +71,8 @@ const DisplayJobs = ({ jobs, onJobDelete, onEdit }) => {
             <tr key={item.job_id}>
               <td>
                 <button onClick={() => onJobDelete(item.job_id)}>Delete</button>
+              </td>
+              <td>
                 <button onClick={() => toggleEditMode(item)}>
                   {editMode.editRow && item.job_id === editMode.id
                     ? "Save"
