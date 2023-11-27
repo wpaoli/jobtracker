@@ -46,8 +46,6 @@ th,td {
   border: 1px solid black;
 } */
 
-
-
 /* 
 table {
   table-layout: auto;
@@ -81,6 +79,7 @@ table {
 .modal-content form label {
   margin-top: 1rem
 }
+
 .modal-content form,.modal-content form button{
   margin: 1em 0em 1em 0em;
 }
@@ -100,16 +99,3 @@ table {
   background: no-repeat right/20% url("../public/x-circle.svg");
   /* visibility: hidden; */
 }
-
-table .edit-button {
-  background: no-repeat right/30% url("../public/pencil-square.svg");
-  font-size: 10px;
-  /* padding-right: 5px; */
-}
-
-table .close-button {
-  background: no-repeat right/20% url("../public/x-circle.svg");
-  font-size: 10px;
-  /* padding-right: 5px; */
-}
-

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Table } from "antd";
 
 import EditableCells from "./EditableCell";
 
@@ -51,7 +50,7 @@ const DisplayJobs = ({ jobs, onJobDelete, onEdit }) => {
   };
 
   return (
-    <table>
+    <table className="">
       <thead>
         <tr>
           <th colSpan={2}>Actions</th>
@@ -70,10 +69,18 @@ const DisplayJobs = ({ jobs, onJobDelete, onEdit }) => {
 
             <tr key={item.job_id}>
               <td>
-                <button onClick={() => onJobDelete(item.job_id)}>Delete</button>
+                <button
+                  className="close-button"
+                  onClick={() => onJobDelete(item.job_id)}
+                >
+                  Delete
+                </button>
               </td>
               <td>
-                <button onClick={() => toggleEditMode(item)}>
+                <button
+                  className="edit-button"
+                  onClick={() => toggleEditMode(item)}
+                >
                   {editMode.editRow && item.job_id === editMode.id
                     ? "Save"
                     : "Edit"}

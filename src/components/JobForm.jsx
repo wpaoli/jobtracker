@@ -19,6 +19,7 @@ const JobForm = ({ onJobSubmit }) => {
       errorMessage: "You left Company Blank",
       label: "Company",
       required: false,
+      autoFocus: true,
     },
     {
       id: 2,
@@ -78,18 +79,21 @@ const JobForm = ({ onJobSubmit }) => {
       });
   };
   return (
-    <form onSubmit={handleSubmit}>
-      {inputs.map((input) => (
-        <FormInput
-          key={input.id}
-          {...input}
-          value={values[input.name]}
-          onChange={onChange}
-        />
-      ))}
-      <button>Submit</button>
-      {/* <button onClick={(e) => e.preventDefault()}>Cancel</button> */}
-    </form>
+    <>
+      <h2>Add a job</h2>
+      <form onSubmit={handleSubmit}>
+        {inputs.map((input, index) => (
+          <FormInput
+            key={input.id}
+            {...input}
+            value={values[input.name]}
+            onChange={onChange}
+            autoFocus={index === 0}
+          />
+        ))}
+        <button>Submit</button>
+      </form>
+    </>
   );
 };
 

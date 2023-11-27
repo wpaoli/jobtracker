@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import JobForm from "./components/JobForm";
 import DisplayJobs from "./components/DisplayJobs";
+import Modal from "./components/Modal";
 import "./App.css";
-import Modal from "react-modal";
 
 /*
 TODO:
@@ -17,11 +17,11 @@ const App = () => {
   const [jobs, setJobs] = useState([]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const openModal = () => {
+  const handleOpenModal = () => {
     setIsModalOpen(true);
   };
 
-  const closeModal = () => {
+  const handleCloseModal = () => {
     setIsModalOpen(false);
   };
 
@@ -29,7 +29,7 @@ const App = () => {
   //JobForm.jsx, prolly want to move that at some point
   const addJob = (job) => {
     setJobs((prevJobs) => [...prevJobs, job]);
-    closeModal();
+    handleCloseModal();
   };
 
   const editJob = (job) => {
@@ -70,25 +70,40 @@ const App = () => {
   };
 
   return (
-    <>
+    <div class="container">
+      <h1>My Job tracker</h1>
+      <h2>A dumb learning project</h2>
+      <p>
+        I started getting pissed that I didnt know react or basic MySql db
+        stuff, so I went too deep on this project. But its cool and Im glad I
+        did it. This project:
+      </p>
+      <ul>
+        <li>Has a node/express DB connection to a local MySQL table</li>
+        <li>Uses react for all the front end</li>
+        <li>
+          I learned a ton doing this simple project, but it probably took WAY
+          longer than it should have.
+        </li>
+      </ul>
+      <br />
+      <br />
+      <br />
+      <hr />
       <DisplayJobs jobs={jobs} onJobDelete={handleDelete} onEdit={editJob} />
-      <Modal
-        isOpen={isModalOpen}
-        onRequestClose={closeModal}
-        style={{
-          content: {
-            width: "50%", // Adjust this value to set the width
-            height: "65%",
-            margin: "0 auto", // This is used to horizontally center the modal
-          },
-        }}
-      >
-        <JobForm onJobSubmit={addJob} />
-      </Modal>
-      <button className="block" onClick={openModal}>
+      <button className="block" onClick={handleOpenModal}>
         Add Job
       </button>
-    </>
+
+      <div>
+        <Modal isOpen={isModalOpen}>
+          <JobForm onJobSubmit={addJob} />
+          <button className="closeButton" onClick={handleCloseModal}>
+            Close
+          </button>
+        </Modal>
+      </div>
+    </div>
   );
 };
 

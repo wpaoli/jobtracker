@@ -11,3 +11,8 @@ span.errorMessage {
 input:invalid[focused="true"] ~ span {
     display: block;
 }
+
+input {
+    width: 100%;
+    box-sizing: border-box;
+}
