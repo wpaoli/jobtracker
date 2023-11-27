@@ -1,4 +1,6 @@
-# Getting Started with Create React App
+# Weekend project to learn React
+Been too long since I did something myself using react so, I needed to get it started. This project relies on a backend which is in a different repo:
+jobtracker-back-end
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
