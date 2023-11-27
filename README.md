@@ -1,4 +1,4 @@
-# Weekend project to learn React
+# "Job Tracker" Weekend project to learn React
 Been too long since I did something myself using react so, I needed to get it started. This project relies on a backend which is in a different repo:
 jobtracker-back-end
 
